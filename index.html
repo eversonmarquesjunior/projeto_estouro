@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estouro do Balão da Tupperware</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-b from-blue-100 to-purple-100 min-h-screen font-['Poppins']">
+    <div class="w-full max-w-4xl px-4 game-container">
+        <h1><span>🎈</span> Estouro do Balão Tupperware <span>🎈</span></h1>
+        
+        <div class="flex flex-col items-center gap-6 mb-8 w-full">
+            <div class="config-panel">
+                <label for="balloon-count" class="text-lg font-medium text-purple-700">Quantidade de Balões:</label>
+                <select id="balloon-count" class="balloon-select">
+                    <option value="10">10</option>
+                    <option value="20" selected>20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+            <div class="counter">
+                <i class="fas fa-bullseye"></i> Balões restantes: <span id="remaining">20</span>
+            </div>
+            <button id="reset" class="flex items-center gap-2">
+                <i class="fas fa-sync-alt"></i> Reiniciar Jogo
+            </button>
+        </div>
+
+        <div id="game-board">
+            <!-- Balões serão gerados por JavaScript -->
+        </div>
+    </div>
+
+    <div id="prize-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div>
+            <h2><span>🎉</span> Parabéns! <span>🎉</span></h2>
+            <p id="prize-message" class="text-xl font-bold text-purple-700 mt-2 mb-4"></p>
+            <img id="prize-image" src="" alt="Prêmio">
+            <button id="close-modal">
+                <i class="fas fa-chevron-right"></i> Voltar
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
