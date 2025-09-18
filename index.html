@@ -11,32 +11,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gradient-to-b from-blue-100 to-purple-100 min-h-screen font-['Poppins']">
+<body class="bg-gradient-to-b from-pink-100 to-blue-100 min-h-screen font-['Poppins']">
     <div class="w-full max-w-4xl px-4 game-container">
-        <h1><span>🎈</span> Estouro do Balão Tupperware <span>🎈</span></h1>
+        <h1 class="modern-title">Estouro do Balão Tupperware</h1>
         
         <div class="flex flex-col items-center gap-6 mb-8 w-full">
             <div class="config-panel">
-                <label for="balloon-count" class="text-lg font-medium text-purple-700">Quantidade de Balões:</label>
-                <select id="balloon-count" class="balloon-select">
-                    <option value="10">10</option>
-                    <option value="20" selected>20</option>
-                    <option value="30">30</option>
-                    <option value="40">40</option>
-                    <option value="50">50</option>
-                </select>
+                <label for="balloon-count" class="text-lg font-medium text-purple-700 flex items-center gap-2">
+                    QUANTIDADE DE BALÕES:
+                    <select id="balloon-count" class="balloon-select">
+                        <option value="10">10</option>
+                        <option value="20" selected>20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                    </select>
+                </label>
             </div>
             <div class="counter">
-                <i class="fas fa-bullseye"></i> Balões restantes: <span id="remaining">20</span>
+                <i class="fas fa-bullseye"></i> Balões Restantes: <span id="remaining">20</span>
             </div>
-            <button id="reset" class="flex items-center gap-2">
-                <i class="fas fa-sync-alt"></i> Reiniciar Jogo
-            </button>
         </div>
 
         <div id="game-board">
             <!-- Balões serão gerados por JavaScript -->
         </div>
+        <br>
+        <button id="reset" class="flex items-center gap-2">
+                <i class="fas fa-sync-alt"></i> Reiniciar Jogo
+        </button>
     </div>
 
     <div id="prize-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
