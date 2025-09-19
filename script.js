@@ -75,45 +75,62 @@ document.addEventListener('DOMContentLoaded', function() {
             
             balloon.addEventListener('click', function(e) {
                 if (e.target.classList.contains('popped')) return;
-                
-                e.target.classList.add('popped');
+
+                // Destaque inicial do balão selecionado
+                e.target.classList.add('balloon-highlight');
+
+                // Adiciona efeito de crescimento que leva ao estouro
+                e.target.classList.add('prize-shake');
+
+                // Atualiza contadores imediatamente
                 poppedBalloons++;
                 remainingBalloons--;
                 remainingDisplay.textContent = remainingBalloons;
-                
-                // Cria marcador com X no lugar do balão
-                const marker = document.createElement('div');
-                marker.className = 'balloon-marker';
-                marker.style.setProperty('--i', e.target.style.getPropertyValue('--i'));
-                
-                // Substitui o balão pelo marcador após a animação
+
+                // Cria marcador com X no lugar do balão após a animação
                 setTimeout(() => {
+                    const marker = document.createElement('div');
+                    marker.className = 'balloon-marker';
+                    marker.style.setProperty('--i', e.target.style.getPropertyValue('--i'));
+                    marker.style.backgroundColor = getComputedStyle(e.target).backgroundColor;
                     e.target.replaceWith(marker);
-                }, 300);
-                
+                }, 800); // Tempo da animação de crescimento
+
                 // Esconde o modal antes de mostrar novo prêmio
                 prizeModal.classList.remove('active');
-                
-                // Mostra o novo prêmio imediatamente
-                const prizeMessage = document.getElementById('prize-message');
-                const fileName = e.target.dataset.prize.split('/').pop().replace('.png', '');
-                prizeMessage.innerHTML = `VOCÊ GANHOU: <span class="prize-name">${fileName}</span>`;
-                
-                // Verifica se a imagem existe antes de tentar carregar
-                prizeImage.onerror = function() {
-                    this.style.display = 'none';
-                };
-                prizeImage.onload = function() {
-                    this.style.display = 'block';
-                };
-                prizeImage.src = e.target.dataset.prize;
-                prizeImage.alt = fileName;
-                
-                // Força reflow antes de mostrar
-                void prizeModal.offsetWidth;
-                
-                // Mostra o modal com novo prêmio
-                prizeModal.classList.add('active');
+
+                // Delay para criar suspense
+                setTimeout(() => {
+                    // Mostra o novo prêmio com efeito de revelação
+                    const prizeMessage = document.getElementById('prize-message');
+                    const fileName = e.target.dataset.prize.split('/').pop().replace('.png', '');
+
+                    // Efeito typewriter para o nome do prêmio
+                    prizeMessage.innerHTML = `<span class="prize-name prize-typewriter">${fileName}</span>`;
+
+                    // Verifica se a imagem existe antes de tentar carregar
+                    prizeImage.onerror = function() {
+                        this.style.display = 'none';
+                    };
+                    prizeImage.onload = function() {
+                        this.style.display = 'block';
+                        // Remove a classe para garantir que a animação seja executada novamente
+                        this.classList.remove('prize-reveal');
+                        // Força reflow para reiniciar a animação
+                        void this.offsetWidth;
+                        // Adiciona efeito de revelação à imagem
+                        this.classList.add('prize-reveal');
+                    };
+                    prizeImage.src = e.target.dataset.prize;
+                    prizeImage.alt = fileName;
+
+                    // Força reflow antes de mostrar
+                    void prizeModal.offsetWidth;
+
+                    // Mostra o modal com novo prêmio
+                    prizeModal.classList.add('active');
+
+                }, 800); // Delay de 800ms para suspense
             });
             
             gameBoard.appendChild(balloon);
