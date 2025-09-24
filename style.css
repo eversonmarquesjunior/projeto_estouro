@@ -10,7 +10,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 2rem;
+    padding: 0.5rem;
     text-align: center;
     font-family: 'Alfa Slab One', cursive;
     background-color: beige;
@@ -75,6 +75,7 @@ body {
     justify-content: center;
     color: white;
     font-weight: bold;
+    font-size: 1.2rem;
     box-shadow: 
         inset -15px -15px 20px rgba(0,0,0,0.2),
         0 5px 15px rgba(0,0,0,0.1);
@@ -121,12 +122,12 @@ body {
 
 .balloon-marker::before {
     content: 'X';
-    color: #ff0000;
+    color: black;
     font-size: calc(var(--balloon-size) * 0.5);
     font-weight: 900;
     text-shadow:
-        0 0 5px rgba(255, 255, 255, 0.8),
-        0 0 10px rgba(255, 0, 0, 0.5);
+        0 0 5px white,
+        0 0 10px white;
     transform: scale(1.2);
     font-family: 'Alfa Slab One', cursive;
 }
@@ -212,8 +213,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: black;
     font-weight: bold;
+    font-size: 1.5rem;
     box-shadow: 
         inset -15px -15px 20px rgba(0,0,0,0.2),
         0 5px 15px rgba(0,0,0,0.1);
@@ -420,6 +422,76 @@ body {
     transform: translateY(0);
 }
 
+#confirm-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #000000, #1a1a2e, #16213e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    overflow: hidden;
+}
+
+#confirm-modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#confirm-modal > div {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 8px 16px rgba(107, 70, 193, 0.3);
+    text-align: center;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+    width: 400px;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Alfa Slab One', cursive;
+    position: relative;
+}
+
+#confirm-modal.active > div {
+    transform: translateY(0);
+}
+
+#confirm-yes, #confirm-no {
+    background: transparent;
+    color: black;
+    border: none;
+    padding: 15px 20px;
+    font-size: 1rem;
+    font-family: 'Alfa Slab One', cursive;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 10px black;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#confirm-yes:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(107, 70, 193, 0.4);
+}
+
+#confirm-no:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(107, 70, 193, 0.4);
+}
+
 h1, .counter, #close-modal, #reset, .config-panel {
     text-transform: uppercase; /* Aplica caixa alta a todos os textos */
 }
@@ -465,10 +537,10 @@ h1 span {
 /* Estilo simples e moderno para o título */
 .modern-title {
     color: black;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
     font-size: 2.5rem;
     text-shadow: none;
     background-color: transparent;
