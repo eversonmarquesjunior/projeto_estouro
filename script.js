@@ -1,4 +1,35 @@
+let winners = [];
+
+function loadWinners() {
+    const stored = localStorage.getItem('winners');
+    if (stored) {
+        winners = JSON.parse(stored);
+    }
+}
+
+function saveWinners() {
+    localStorage.setItem('winners', JSON.stringify(winners));
+}
+
+function displayWinners() {
+    const container = document.getElementById('winners-list');
+    let ul = container.querySelector('ul');
+    if (!ul) {
+        ul = document.createElement('ul');
+        container.appendChild(ul);
+    }
+    ul.innerHTML = '';
+    winners.forEach(w => {
+        const li = document.createElement('li');
+        li.innerHTML = `${w.prize} - <span class="winner-name">${w.winner}</span>`;
+        ul.appendChild(li);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    loadWinners();
+    displayWinners();
+
     const gameBoard = document.getElementById('game-board');
     const remainingDisplay = document.getElementById('remaining');
     const resetButton = document.getElementById('reset');
@@ -152,50 +183,101 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Força reflow antes de mostrar
                     void prizeModal.offsetWidth;
 
-                    // Mostra o modal com novo prêmio
-                    prizeModal.classList.add('active');
+                // Mostra o modal com novo prêmio
+                prizeModal.classList.add('active');
 
-                }, 800); // Delay de 800ms para suspense
-            });
-            
-            gameBoard.appendChild(balloon);
-        }
+                // Após 4 segundos, mostrar input para nome do ganhador e botão salvar
+                setTimeout(() => {
+                    showWinnerInput(fileName);
+                }, 4000);
+
+            }, 800); // Delay de 800ms para suspense
+        });
+
+        gameBoard.appendChild(balloon);
     }
+}
 
-    // Fecha o modal
-    closeModal.addEventListener('click', () => {
+function showWinnerInput(prizeName) {
+    const modalContent = prizeModal.querySelector('div');
+    // Remove input e botão existentes, se houver
+    const existingInput = modalContent.querySelector('#winner-name-input');
+    const existingButton = modalContent.querySelector('#save-winner-button');
+    const existingContainer = modalContent.querySelector('#winner-input-container');
+    if (existingInput) existingInput.remove();
+    if (existingButton) existingButton.remove();
+    if (existingContainer) existingContainer.remove();
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = 'winner-name-input';
+    input.placeholder = 'Digite o nome do ganhador';
+    input.style.marginTop = '5px';
+    input.style.padding = '8px';
+    input.style.fontSize = '1rem';
+    input.style.borderRadius = '5px';
+    input.style.border = '1px solid #000000ff';
+
+    const saveButton = document.createElement('button');
+    saveButton.id = 'save-winner-button';
+    saveButton.textContent = 'Salvar';
+    saveButton.style.marginLeft = '10px';
+    saveButton.style.marginTop = '5px';
+    saveButton.style.padding = '8px 12px';
+    saveButton.style.fontSize = '1rem';
+    saveButton.style.borderRadius = '5px';
+    saveButton.style.border = 'none';
+    saveButton.style.backgroundColor = '#000000ff';
+    saveButton.style.color = 'white';
+    saveButton.style.cursor = 'pointer';
+
+    saveButton.addEventListener('click', () => {
+        const winnerName = input.value.trim();
+        if (winnerName === '') {
+            alert('Por favor, digite o nome do ganhador.');
+            return;
+        }
+        addWinnerToList(prizeName, winnerName);
         prizeModal.classList.remove('active');
-        
-        // Remove o balão estourado
-        const popped = document.querySelector('.balloon.popped');
-        if (popped) {
-            popped.remove();
-        }
-        
-        // Verifica se o jogo acabou
-        if (remainingBalloons === 0) {
-            setTimeout(() => {
-                alert('Parabéns! Você estourou todos os balões!');
-            }, 500);
-        }
+        input.remove();
+        saveButton.remove();
     });
 
-    // Mostra modal de confirmação ao reiniciar
-    resetButton.addEventListener('click', () => {
-        confirmModal.classList.add('active');
-    });
+    const container = document.createElement('div');
+    container.id = 'winner-input-container';
+    container.style.display = 'flex';
+    container.style.alignItems = 'center';
+    container.style.justifyContent = 'center';
+    container.style.marginTop = '10px';
 
-    // Confirma reinicialização
-    confirmYes.addEventListener('click', () => {
-        confirmModal.classList.remove('active');
-        initGame();
-    });
+    container.appendChild(input);
+    container.appendChild(saveButton);
+    modalContent.appendChild(container);
+    input.focus();
+}
 
-    // Cancela reinicialização
-    confirmNo.addEventListener('click', () => {
-        confirmModal.classList.remove('active');
-    });
+function addWinnerToList(prizeName, winnerName) {
+    winners.push({prize: prizeName, winner: winnerName});
+    saveWinners();
+    displayWinners();
+}
 
-    // Inicia o jogo
+resetButton.addEventListener('click', () => {
+    confirmModal.classList.add('active');
+});
+
+confirmYes.addEventListener('click', () => {
+    confirmModal.classList.remove('active');
     initGame();
+    // Limpa lista de ganhadores ao reiniciar
+    winners = [];
+    saveWinners();
+    displayWinners();
+});
+
+confirmNo.addEventListener('click', () => {
+    confirmModal.classList.remove('active');
+});
+
+initGame();
 });

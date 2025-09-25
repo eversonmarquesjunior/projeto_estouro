@@ -103,8 +103,6 @@ body {
         0 8px 20px rgba(0,0,0,0.15);
 }
 
-
-
 .balloon-marker {
     position: relative;
     width: var(--balloon-size);
@@ -318,9 +316,10 @@ body {
     text-align: center;
     transform: translateY(20px);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.4);
-    width: 600px;
-    max-width: 400px;
-    max-height: 600px; /* Altura máxima da janela */
+    width: auto;
+    min-width: 354px;
+    max-width: 90vw;
+    max-height: 759px; /* Altura máxima da janela */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -371,10 +370,10 @@ body {
 .confetti-piece:nth-child(10) { left: 15%; animation-delay: 1.8s; background: radial-gradient(circle, #00ced1, #ff1493); }
 
 #prize-image {
-    width: 500px;
-    max-width: 500px;
-    height: 500px;
-    max-height: 500px; /* Altura maior mas limitada */
+    width: 633px;
+    max-width: 633px;
+    height: 633px;
+    max-height: 633px; /* Altura maior mas limitada */
     margin: 0.3rem 0;
     object-fit: contain;
     border: 2px solid black;
@@ -397,6 +396,8 @@ body {
     padding: 0 0.5rem;
     font-family: 'Alfa Slab One', cursive;
     text-transform: uppercase;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .prize-name {
@@ -410,11 +411,11 @@ body {
     #prize-modal > div {
         padding: 0.8rem;
         gap: 0.2rem;
-        max-height: 85vh;
+        max-height: 107.5vh;
     }
 
     #prize-image {
-        max-height: 40vh;
+        max-height: 50.6vh;
     }
 }
 
@@ -476,7 +477,7 @@ body {
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 10px black;
+    box-shadow: 0 2px 2px black;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -492,7 +493,7 @@ body {
     box-shadow: 0 6px 15px rgba(107, 70, 193, 0.4);
 }
 
-h1, .counter, #close-modal, #reset, .config-panel {
+h1, .counter, #close-modal, #reset, .config-panel, .winner-name {
     text-transform: uppercase; /* Aplica caixa alta a todos os textos */
 }
 
@@ -610,7 +611,7 @@ h1 span {
 
 #prize-image {
     width: 100%;
-    max-width: 350px;
+    max-width: 443px;
     height: auto;
     border-radius: 0.75rem;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
@@ -618,7 +619,7 @@ h1 span {
 }
 
 #close-modal {
-    background: linear-gradient(135deg, beige, beige);
+    background: linear-gradient(135deg, hsl(60, 56%, 91%), beige);
     color: black;
     border: none;
     padding: 0.60rem 2rem;
@@ -699,6 +700,10 @@ h1 span {
 
 #reset:hover i {
     transform: rotate(360deg);
+}
+
+.winner-name {
+    color: red; /* Rosa, você pode mudar aqui */
 }
 
 /* Responsividade */
